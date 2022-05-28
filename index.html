@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Simons Game</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Press+Start+2P"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+
+  <body>
+    <h1 id="level-title">Press Any Key to Start</h1>
+
+    <div class="container">
+      <div>
+        <div class="row">
+          <div type="button" id="green" class="btn green"><i class="arrow fas fa-arrow-up"></i></div>
+          
+        </div>
+
+        <div class="row">
+          <div type="button" id="yellow" class="btn yellow"><i class="arrow fas fa-arrow-left"></i></div>
+          <div type="button" id="blue" class="btn blue"><i class="arrow fas fa-arrow-right"></i></div>
+        </div>
+
+        <div class="row">
+          <div type="button" id="red" class="btn red"><i class="arrow fas fa-arrow-down"></i></div>
+        </div>
+      </div>
+
+      <button class="show-pattern">Hey</button>
+
+      <div class="note">Note: You can use arrow keys or a, w, s, d keys on keyboard to select the keyboard</div>
+
+      <div class="instructions">
+        <a class="instructions-button"
+          >How to Play <i class="fa-solid fa-circle-question"></i
+        ></a>
+        
+        <ol class="instructions-para">
+          <li>At every level, a new button will blink.</li>
+          <li>You need to remember the order of the blinking button.</li>
+          <li>Click on buttons in the same order as shown in previous level and add the newly blinking button to that order.</li>
+          <li>If the order in which you click is wrong, the game will end.</li>
+        </ol>
+      </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="game.js"></script>
+
+    <footer id="footer">Developed by Sarthak Kahaliya.</footer>
+  </body>
+</html>

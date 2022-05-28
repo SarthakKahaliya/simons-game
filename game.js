@@ -32,31 +32,11 @@ $(".instructions-button").on("click", function () {
   $(".instructions-para").slideToggle();
 });
 
-$(document).on("keydown", function (event) {
-  if (started === 0) {
-    nextSequence();
-    started = 1;
-  } else {
-    if (keyboardKeys.includes(event.key)) {
-      if (event.key == "ArrowUp" || event.key == "w") {
-        userChosenColor = "green";
-      } else if (event.key == "ArrowLeft" || event.key == "a") {
-        userChosenColor = "yellow";
-      } else if (event.key == "ArrowRight" || event.key == "d") {
-        userChosenColor = "blue";
-      } else if (event.key == "ArrowDown" || event.key == "s") {
-        userChosenColor = "red";
-      }
-      userClickedPattern.push(userChosenColor);
-      check();
-      animatePress(userChosenColor);
-      playAudio(userChosenColor);
-    }
-  }
-});
-
 function nextSequence() {
   $("h1").text("Level " + ++level);
+  $(".show-pattern")
+    .css("visibility", "visible")
+    .text("Show Order (" + hintAvailable + ")");
   var randomNumber = Math.floor(Math.random() * 4);
   randomChosenColor = buttonColors[randomNumber];
   setTimeout(function () {
@@ -73,15 +53,48 @@ function nextSequence() {
   gamePattern.push(randomChosenColor);
 }
 
-$(".btn").on("click", function () {
-  userChosenColor = $(this).attr("id");
-  userClickedPattern.push(userChosenColor);
-  check();
-  animatePress(userChosenColor);
-  playAudio(userChosenColor);
-});
+$(document).on("keydown", function (event) {
+    if (started === 0) {
+      nextSequence();
+      started = 1;
+    } else {
+      if (keyboardKeys.includes(event.key)) {
+        if (event.key == "ArrowUp" || event.key == "w") {
+          userChosenColor = "green";
+        } else if (event.key == "ArrowLeft" || event.key == "a") {
+          userChosenColor = "yellow";
+        } else if (event.key == "ArrowRight" || event.key == "d") {
+          userChosenColor = "blue";
+        } else if (event.key == "ArrowDown" || event.key == "s") {
+          userChosenColor = "red";
+        }
+        userClickedPattern.push(userChosenColor);
+        check();
+        animatePress(userChosenColor);
+        playAudio(userChosenColor);
+      }
+    }
+  });
 
-$(".show-pattern").text("Show Order (" + hintAvailable + ")");
+$(document).on('click', function(){
+    if (started === 0) {
+        nextSequence();
+        started = 1;
+      } 
+})
+
+$(".btn").on("click", function () {
+  if (started === 0) {
+    nextSequence();
+    started = 1;
+  } else {
+    userChosenColor = $(this).attr("id");
+    userClickedPattern.push(userChosenColor);
+    check();
+    animatePress(userChosenColor);
+    playAudio(userChosenColor);
+  }
+});
 
 $(".show-pattern").on("click", function () {
   if (started == 1) {
@@ -154,6 +167,7 @@ function gameOver() {
     $("body").removeClass("game-over");
   }, 200);
   playAudio("wrong");
+  $(".show-pattern").css("visibility", "hidden");
   started = 0;
   level = 0;
   gamePattern = [];

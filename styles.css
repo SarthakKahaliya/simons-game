@@ -93,6 +93,7 @@ body {
   background-color: #FEF2BF;
   font-size: 2rem;
   font-family: 'Press Start 2P', cursive;
+  visibility: hidden;
 
 }
 

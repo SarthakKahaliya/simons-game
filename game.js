@@ -76,12 +76,7 @@ $(document).on("keydown", function (event) {
     }
   });
 
-$(document).on('click', function(){
-    if (started === 0) {
-        nextSequence();
-        started = 1;
-      } 
-})
+
 
 $(".btn").on("click", function () {
   if (started === 0) {
@@ -160,7 +155,7 @@ function levelUp() {
 
 function gameOver() {
   $("h1").html(
-    "<span style = 'color: red;'>Game Over!</span> Press Any Key to Restart"
+    "<span style = 'color: red;'>Game Over!</span> Press/Click Any Key to Restart"
   );
   $("body").addClass("game-over");
   setTimeout(function () {

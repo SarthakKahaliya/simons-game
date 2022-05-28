@@ -6,7 +6,7 @@ body {
 
 #level-title {
   font-size: 3rem;
-  margin:  5%;
+  margin: 3% 5% 5%;
   color: #FEF2BF;
 }
 
@@ -27,6 +27,7 @@ body {
 
 .instructions-button{
   cursor: pointer;
+  font-size: 1.5rem;
 }
 
 .instructions-para{
@@ -41,9 +42,18 @@ body {
   line-height: 1.5;
 }
 
+.sound{
+  color: #FEF2BF;
+  font-size: 2rem;
+  position: absolute;
+  top: 250px;
+  right: 11%;
+  cursor: pointer;
+}
+
 .btn {
   cursor: pointer;
-  margin: 0px 80px;
+  margin: 10px 80px;
   display: inline-block;
   width: 100px;
   height: 100px;
@@ -100,11 +110,12 @@ body {
 .note{
   color: #FEF2BF;
   line-height: 1.5;
+
 }
 
 footer{
   
-  font-size: 1rem;
+  font-size: 15px;
   margin:  5% 0 0;
   color: #FEF2BF;
 }

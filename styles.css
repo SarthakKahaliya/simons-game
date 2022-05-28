@@ -95,7 +95,7 @@ body {
   background-color: grey;
 }
 
-.show-pattern{
+.lives{
   margin: 50px 0px 50px;
   padding: 20px;
   border-radius: 10px;
@@ -104,8 +104,16 @@ body {
   font-size: 2rem;
   font-family: 'Press Start 2P', cursive;
   visibility: hidden;
-
 }
+
+.lives:hover, .lives:focus {
+  outline: none;
+}
+
+.lives:active { 
+  border-style: outset;
+}
+
 
 .note{
   color: #FEF2BF;

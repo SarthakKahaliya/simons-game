@@ -25,6 +25,8 @@ var hintAvailable = 2;
 
 var soundToggle = 1;
 
+var allowInput = 1;
+
 // Instructions
 $(".instructions-para").hide();
 
@@ -38,26 +40,16 @@ $(".instructions-button").on("click", function () {
 // Create the Next Sequence
 function nextSequence() {
   $("h1").text("Level " + level);
-  if(level%5==0){
+  if (level % 5 == 0) {
     hintAvailable++;
   }
-  $(".show-pattern")
+  $(".lives")
     .css("visibility", "visible")
-    .text("Show Order (" + hintAvailable + ")");
+    .text("Lives remaining (" + hintAvailable + ")");
   var randomNumber = Math.floor(Math.random() * 4);
   randomChosenColor = buttonColors[randomNumber];
-  setTimeout(function () {
-    $("#" + randomChosenColor)
-      .fadeOut(100)
-      .fadeIn(100)
-      .fadeOut(100)
-      .fadeIn(100)
-      .fadeOut(100)
-      .fadeIn(100);
-    playAudio(randomChosenColor);
-  }, 1000);
-
   gamePattern.push(randomChosenColor);
+  showPattern(0);
 }
 
 // Detecting the Keyboard input event
@@ -66,7 +58,7 @@ $(document).on("keydown", function (event) {
     nextSequence();
     started = 1;
   } else {
-    if (keyboardKeys.includes(event.key)) {
+    if (keyboardKeys.includes(event.key) && allowInput == 1) {
       if (event.key == "ArrowUp" || event.key == "w") {
         userChosenColor = "green";
       } else if (event.key == "ArrowLeft" || event.key == "a") {
@@ -90,31 +82,42 @@ $(".btn").on("click", function () {
     nextSequence();
     started = 1;
   } else {
-    userChosenColor = $(this).attr("id");
-    userClickedPattern.push(userChosenColor);
-    check();
-    animatePress(userChosenColor);
-    playAudio(userChosenColor);
+    if (allowInput == 1) {
+      userChosenColor = $(this).attr("id");
+      userClickedPattern.push(userChosenColor);
+      check();
+      animatePress(userChosenColor);
+      playAudio(userChosenColor);
+    }
   }
 });
 
-// Detecting the Clicking on Show Pattern button
-$(".show-pattern").on("click", function () {
-  if (started == 1) {
-    showPattern();
-  }
-});
+// // Detecting the Clicking on Show Pattern button
+// $(".lives").on("click", function () {
+//   if (started == 1) {
+//     showPattern(1);
+//   }
+// });
 
 // Function to Show the pattern
-function showPattern() {
-  if (hintAvailable > 0) {
+function showPattern(liveRemaining) {
+    userClickedPattern = [];
+  if (liveRemaining == 1) {
+    if (hintAvailable > 0) {
+      hintAvailable--;
+      setTimeout(function () {
+        $(".lives").text("Lives remaining (" + hintAvailable + ")");
+      }, 70);
+      allowInput = 0;
+    $(".btn").css("cursor", "wait");
     var i = 0;
     myLoop(i);
-    hintAvailable--;
-    setTimeout(function () {
-      $(".show-pattern").text("Show Order (" + hintAvailable + ")");
-    }, 70);
-    userClickedPattern = [];
+    }
+  } else {
+    allowInput = 0;
+    $(".btn").css("cursor", "wait");
+    var i = 0;
+    myLoop(i);
   }
 }
 
@@ -123,15 +126,16 @@ function myLoop(i) {
   setTimeout(function () {
     $("#" + gamePattern[i])
       .fadeOut(100)
-      .fadeIn(100); //  your code here
+      .fadeIn(100);
+    playAudio(gamePattern[i]); //  your code here
     i++; //  increment the counter
     if (i < gamePattern.length) {
-      //  if the counter < 10, call the loop function
-      myLoop(i); //  ..  again which will trigger another
-    }else if(i == gamePattern.length){
-        levelUp();
-    } //  ..  setTimeout()
-  }, 1000);
+      myLoop(i);
+    } else if (i == gamePattern.length) {
+      allowInput = 1;
+      $(".btn").css("cursor", "pointer");
+    }
+  }, 800); //  ..  setTimeout()
 }
 
 // Checking if the User input is Correct
@@ -146,7 +150,8 @@ function check() {
       setTimeout(function () {
         $("body").removeClass("game-over");
       }, 200);
-      showPattern();
+
+      showPattern(1);
     } else {
       gameOver();
     }
@@ -161,7 +166,6 @@ function check() {
 function levelUp() {
   setTimeout(function () {
     playAudio("levelup");
-    userClickedPattern = [];
     level++;
     nextSequence();
   }, 500);
@@ -177,12 +181,11 @@ function gameOver() {
     $("body").removeClass("game-over");
   }, 200);
   playAudio("wrong");
-  $(".show-pattern").css("visibility", "hidden");
+  $(".lives").css("visibility", "hidden");
   started = 0;
   level = 1;
   gamePattern = [];
-  userClickedPattern = [];
-  hintAvailable = 3;
+  hintAvailable = 2;
 }
 
 // Function Animating the Clicking of the Button

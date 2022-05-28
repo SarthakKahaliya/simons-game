@@ -40,7 +40,7 @@ $(".instructions-button").on("click", function () {
 // Create the Next Sequence
 function nextSequence() {
   $("h1").text("Level " + level);
-  if (level % 5 == 0) {
+  if (level % 10 == 0) {
     hintAvailable++;
   }
   $(".lives")
